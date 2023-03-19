@@ -1,0 +1,14 @@
+{
+  "value": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "test",
+    "column_name": "value",
+    "is_primary_key": false,
+    "is_nullable": true,
+    "ordinal_position": 2,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  }
+}

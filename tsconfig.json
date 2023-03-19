@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "baseUrl": ".",
+    "preserveWatchOutput": true,
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "strictFunctionTypes": true,
+    "skipDefaultLibCheck": false,
+    "strictNullChecks": true,
+    "useDefineForClassFields": true,
+    "noImplicitAny": false,
+  },
+  "include": ["*", "**/*"],
+  "exclude": ["vue/**/*"]
+}

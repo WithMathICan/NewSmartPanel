@@ -1,0 +1,62 @@
+{
+  "schema_name": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "img_settings",
+    "column_name": "schema_name",
+    "is_primary_key": false,
+    "is_nullable": true,
+    "ordinal_position": 2,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  },
+  "table_name": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "img_settings",
+    "column_name": "table_name",
+    "is_primary_key": false,
+    "is_nullable": true,
+    "ordinal_position": 3,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  },
+  "files_dir": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "img_settings",
+    "column_name": "files_dir",
+    "is_primary_key": false,
+    "is_nullable": true,
+    "ordinal_position": 4,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  },
+  "img_size": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "img_settings",
+    "column_name": "img_size",
+    "is_primary_key": false,
+    "is_nullable": true,
+    "ordinal_position": 5,
+    "column_default": "1200",
+    "data_type": "number",
+    "is_array": false
+  },
+  "quality": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "img_settings",
+    "column_name": "quality",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 6,
+    "column_default": "90",
+    "data_type": "number",
+    "is_array": false
+  }
+}

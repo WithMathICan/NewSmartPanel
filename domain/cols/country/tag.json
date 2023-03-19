@@ -1,0 +1,14 @@
+{
+  "title": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "tag",
+    "column_name": "title",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 2,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  }
+}

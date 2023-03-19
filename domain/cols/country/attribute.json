@@ -1,0 +1,32 @@
+{
+  "title": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "attribute",
+    "column_name": "title",
+    "is_primary_key": false,
+    "is_nullable": true,
+    "ordinal_position": 2,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  },
+  "attribute_type": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "attribute",
+    "column_name": "attribute_type",
+    "is_primary_key": false,
+    "is_nullable": true,
+    "ordinal_position": 3,
+    "column_default": null,
+    "data_type": "fk",
+    "is_array": false,
+    "fk": {
+      "foreign_column_name": "title",
+      "foreign_table_name": "attribute_type",
+      "foreign_table_schema": "country",
+      "foreign_title_column_name": "title"
+    }
+  }
+}

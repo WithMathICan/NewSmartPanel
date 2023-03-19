@@ -1,0 +1,62 @@
+{
+  "title": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "country",
+    "column_name": "title",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 2,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  },
+  "code": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "country",
+    "column_name": "code",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 3,
+    "column_default": null,
+    "data_type": "varchar",
+    "is_array": false
+  },
+  "population": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "country",
+    "column_name": "population",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 4,
+    "column_default": "10",
+    "data_type": "number",
+    "is_array": false
+  },
+  "created_at": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "country",
+    "column_name": "created_at",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 5,
+    "column_default": "now()",
+    "data_type": "date",
+    "is_array": false
+  },
+  "updated_at": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "country",
+    "column_name": "updated_at",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 6,
+    "column_default": "now()",
+    "data_type": "date",
+    "is_array": false
+  }
+}
