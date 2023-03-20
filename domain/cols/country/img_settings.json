@@ -58,5 +58,17 @@
     "column_default": "90",
     "data_type": "number",
     "is_array": false
+  },
+  "ext": {
+    "table_catalog": "smart",
+    "table_schema": "country",
+    "table_name": "img_settings",
+    "column_name": "ext",
+    "is_primary_key": false,
+    "is_nullable": false,
+    "ordinal_position": 7,
+    "column_default": "'jpeg'::character varying",
+    "data_type": "varchar",
+    "is_array": false
   }
 }

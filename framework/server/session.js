@@ -7,12 +7,6 @@ const crypto = require('node:crypto')
 /** @type {Record<string, import('domain/Secret').ISecretSession>} */
 const sessions = {}
 
-function assertSessionObj(sessionObj, ip) {
-   assert(sessionObj, 'Session obj is null')
-   assert(sessionObj.expires > Date.now())
-   assert(sessionObj.ip_address === ip, 'IP is changed')
-}
-
 const initialSessionObj = (ip, SESSION_DURATION) => ({
    id: '0',
    session_id: crypto.randomUUID(),
@@ -34,7 +28,9 @@ function createSessionStoreInRAM(SESSION_DURATION) {
          try {
             assert(session_id, 'Session id is null')
             const sessionObj = sessions[session_id]
-            assertSessionObj(sessionObj, ip)
+            assert(sessionObj, 'Session obj is null')
+            assert(sessionObj.expires > Date.now())
+            assert(sessionObj.ip_address === ip, 'IP is changed')
             return sessionObj
          } catch (e) {
             deleteSessionInRAM(session_id)
@@ -43,10 +39,10 @@ function createSessionStoreInRAM(SESSION_DURATION) {
       },
       /** @param {import('domain/Secret').ISecretSession} sessionObj */
       async saveSession(sessionObj) {
-         console.log({ sessions });
-         if (sessionObj.expires - Date.now() < SESSION_DURATION) sessionObj.expires = Date.now() + SESSION_DURATION
+         // console.log({ sessions });
+         if (sessionObj.expires - Date.now() < SESSION_DURATION / 2) sessionObj.expires = Date.now() + SESSION_DURATION
          sessions[sessionObj.session_id] = sessionObj
-         return `session_id=${sessionObj.session_id}`
+         return `session_id=${sessionObj.session_id}; SameSite=Lax; HttpOnly; Domain=localhost; Secure; Path=/api; Max-Age=${SESSION_DURATION / 1000};`
       }
    }
    return sessionInRAM

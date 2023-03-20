@@ -12,7 +12,7 @@ const config = {
       port: 5432
    },
    SESSION_TABLE: 'secret.session',
-   SESSION_DURATION: 1000 * 60,
+   SESSION_DURATION: 1000 * 60 * 5,
    PORT: 3000,
    API_PREFIX,
    PUBLIC_DIR: __dirname + '/public',

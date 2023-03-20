@@ -73,11 +73,11 @@ pgPool.query('SELECT 1+1').then(async () => {
                } catch (/** @type {any} */ e) {
                   console.error(e);
                   await pgClient.query('ROLLBACK')
-                  res.writeHead(404, { 'Content-Type': 'application/json' })
+                  const cookieHeader = await sessionObj.SaveSession()
+                  res.writeHead(404, { 'Content-Type': 'application/json;', 'Set-Cookie': cookieHeader  })
                   let message = e.message
                   if (e.code === 'ENOENT') message = 'Не удалось найти файл или папку'
-                  res.end(JSON.stringify({ message }));
-                  await sessionObj.SaveSession()
+                  return res.end(JSON.stringify({ message }));
                } finally {
                   pgClient.release()
                }
@@ -87,6 +87,7 @@ pgPool.query('SELECT 1+1').then(async () => {
          assert(resData, `Route for url="${req.url}" not found`)
          const cookieHeader = await sessionObj.SaveSession()
          res.writeHead(resData.statusCode, { ...resData.headers, 'Set-Cookie': cookieHeader })
+         // console.log({ headers: resData.headers });
          res.end(isResJson ? JSON.stringify(resData.data) : resData.data)
       } catch (/** @type {any} */ e) {
          console.error(e);

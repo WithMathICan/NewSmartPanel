@@ -59,6 +59,7 @@ export interface ICountryImgSettings {
    files_dir: string
    img_size: number
    quality: number
+   ext: string
 }
 
 export interface ICountryCategory {
