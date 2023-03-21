@@ -8,7 +8,6 @@ const crypto = require('node:crypto')
 const sessions = {}
 
 const initialSessionObj = (ip, SESSION_DURATION) => ({
-   id: '0',
    session_id: crypto.randomUUID(),
    data: {},
    ip_address: ip,
@@ -16,10 +15,6 @@ const initialSessionObj = (ip, SESSION_DURATION) => ({
    updated_at: new Date(),
    expires: Date.now() + SESSION_DURATION
 })
-
-function deleteSessionInRAM(session_id) {
-   if (session_id && sessions[session_id]) delete sessions[session_id]
-}
 
 function createSessionStoreInRAM(SESSION_DURATION) {
    /** @type {import('./session').ISessionStore} */
@@ -33,7 +28,7 @@ function createSessionStoreInRAM(SESSION_DURATION) {
             assert(sessionObj.ip_address === ip, 'IP is changed')
             return sessionObj
          } catch (e) {
-            deleteSessionInRAM(session_id)
+            if (session_id && sessions[session_id]) delete sessions[session_id]
             return initialSessionObj(ip, SESSION_DURATION)
          }
       },

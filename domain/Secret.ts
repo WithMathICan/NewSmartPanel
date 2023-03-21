@@ -1,31 +1,31 @@
 export interface ISecretPermission {
-   id: string
+   id?: string
    table_schema: string
    table_name: string
    permission_value: string
 }
 
 export interface ISecretPermissionValue {
-   id: string
+   id?: string
    alias: string
    title: string
 }
 
 export interface ISecretGroup {
-   id: string
+   id?: string
    title: string
    permissions: number
 }
 
 export interface ISecretUser {
-   id: string
+   id?: string
    title: string
    password: string
    groups: number
 }
 
 export interface ISecretSession {
-   id: string
+   id?: string
    session_id: string
    ip_address: string
    data: Record<string, any>

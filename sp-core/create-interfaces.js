@@ -19,7 +19,10 @@ function findDataType(col) {
  */
 function createInterfaceByCols(cols, interfaceName) {
    const strArr = [`export interface ${interfaceName} {\n`]
-   for (const col of cols) strArr.push(`   ${col.column_name}: ${findDataType(col)}\n`)
+   for (const col of cols) {
+      if (col.column_name === 'id') strArr.push(`   ${col.column_name}?: ${findDataType(col)}\n`)
+      else strArr.push(`   ${col.column_name}: ${findDataType(col)}\n`)
+   }
    strArr.push('}\n\n')
    return strArr.join('')
 }

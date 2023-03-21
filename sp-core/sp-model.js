@@ -4,7 +4,6 @@
 const fs = require('node:fs')
 const gm = require('gm').subClass({ imageMagick: true });
 
-
 // function clearBeanFields(cols, bean) {
 //    for (const key in bean) if (!(key in cols)) delete bean[key]
 // }
@@ -101,7 +100,6 @@ async function removeUnusedM2M(bean_id, insertedValues, bean_field, m2m_filed, c
       if (!insertedValues.includes(id)) await pgClient.query(sql, [bean_id, id])
    }
 }
-
 
 /**
  * @param {string} schema

@@ -1,5 +1,5 @@
 export interface ICountryCountry {
-   id: string
+   id?: string
    title: string
    code: string
    population: number
@@ -8,7 +8,7 @@ export interface ICountryCountry {
 }
 
 export interface ICountryRegion {
-   id: string
+   id?: string
    title: string
    code: string
    population: number
@@ -18,12 +18,12 @@ export interface ICountryRegion {
 }
 
 export interface ICountryTag {
-   id: string
+   id?: string
    title: string
 }
 
 export interface ICountryCity {
-   id: string
+   id?: string
    title: string
    code: string
    population: number
@@ -37,23 +37,23 @@ export interface ICountryCity {
 }
 
 export interface ICountryAttributeType {
-   id: string
+   id?: string
    title: string
 }
 
 export interface ICountryAttribute {
-   id: string
+   id?: string
    title: string
    attribute_type: string
 }
 
 export interface ICountryTest {
-   id: string
+   id?: string
    value: string
 }
 
 export interface ICountryImgSettings {
-   id: string
+   id?: string
    schema_name: string
    table_name: string
    files_dir: string
@@ -63,7 +63,7 @@ export interface ICountryImgSettings {
 }
 
 export interface ICountryCategory {
-   id: string
+   id?: string
    title: string
    parent_id: number
 }
