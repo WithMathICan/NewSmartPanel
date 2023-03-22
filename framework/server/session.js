@@ -62,4 +62,41 @@ async function startSession(session_id, ip, sessionStore) {
    return { SetKey, GetKey, DelKey, SaveSession }
 }
 
-module.exports = { createSessionStoreInRAM, startSession }
+/**
+ * @param {import('sp-core/types').IQbuilder} sessionQBuilder
+ * @returns {import('./session').ISessionStore}
+ */
+function createDbSessionStore(sessionQBuilder, SESSION_DURATION) {
+   /** @type {import('./session').ISessionStore} */
+   const store = {
+      async loadSession(session_id, ip) {
+         try {
+            assert(session_id, 'Session id is null')
+            const sql = `SELECT * FROM ${sessionQBuilder.tableName} WHERE session_id=$1`
+            /** @type {import('domain/Secret').ISecretSession} */
+            const sessionObj = await sessionQBuilder.queryFirst(sql, [session_id])
+            assert(sessionObj, 'Session obj is null')
+            assert(sessionObj.expires > Date.now())
+            assert(sessionObj.ip_address === ip, 'IP is changed')
+            return sessionObj
+         } catch (e) {
+            const sql = `DELETE FROM ${sessionQBuilder.tableName} WHERE session_id=$1`
+            if (session_id) await sessionQBuilder.queryAll(sql, [session_id])
+            const initialObj = await sessionQBuilder.insert(initialSessionObj(ip, SESSION_DURATION))
+            return initialObj
+         }
+      },
+      /** @param {import('domain/Secret').ISecretSession} sessionObj */
+      async saveSession(sessionObj) {
+         try {
+            assert(sessionObj.id, 'No id in Session Object')
+            await sessionQBuilder.update(sessionObj.id, sessionObj)
+         } catch (/** @type {any} */ e) {
+            console.error('SESSION WAS NOT SAVED', e)
+         }
+      }
+   }
+   return store
+}
+
+module.exports = { createSessionStoreInRAM, startSession, createDbSessionStore }

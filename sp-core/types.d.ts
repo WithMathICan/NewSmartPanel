@@ -39,6 +39,18 @@ export interface ITableApi{
    upload: (args: IUploadArgs) => Promise<IApiResult<string>>
 }
 
+export interface IQbuilder {
+   tableName: string
+   queryAll(sql: string, arr: any[]) : Promise<any[]> 
+   queryFirst(sql: string, arr: any[]) : Promise<any>
+   findById(id: string) : Promise<any>,
+   findAll() : Promise<any[]>
+   insert(record: DbRecord) : Promise<any>
+   update(id: string, record: DbRecord) : Promise<any>
+   removeMany(ids: string[]) : Promise<string[]>
+   removeOne(id: string) : Promise<string>
+}
+
 export interface ICookie {
    session_id?: string
 }

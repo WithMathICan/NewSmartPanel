@@ -30,7 +30,7 @@ async function insertQuery(record, tableName, colsKeys, pgClient) {
    const nums = []
    const args = []
    let i = 1
-   for (const key in record) if (colsKeys.includes(key)) {
+   for (const key in record) if (colsKeys.includes(key) && key !== 'id') {
       fields.push(key)
       nums.push(`$${i++}`)
       args.push(record[key])
