@@ -70,6 +70,8 @@ function createDbSessionStore(sessionQBuilder, SESSION_DURATION) {
    /** @type {import('./session').ISessionStore} */
    const store = {
       async loadSession(session_id, ip) {
+         const SSID = Math.round(Math.random() * 100)
+         console.log('SESSION LOAD', SSID);
          try {
             assert(session_id, 'Session id is null')
             const sql = `SELECT * FROM ${sessionQBuilder.tableName} WHERE session_id=$1`
@@ -78,6 +80,7 @@ function createDbSessionStore(sessionQBuilder, SESSION_DURATION) {
             assert(sessionObj, 'Session obj is null')
             assert(sessionObj.expires > Date.now())
             assert(sessionObj.ip_address === ip, 'IP is changed')
+            console.log('LOADED', SSID);
             return sessionObj
          } catch (e) {
             const sql = `DELETE FROM ${sessionQBuilder.tableName} WHERE session_id=$1`
@@ -91,6 +94,7 @@ function createDbSessionStore(sessionQBuilder, SESSION_DURATION) {
          try {
             assert(sessionObj.id, 'No id in Session Object')
             await sessionQBuilder.update(sessionObj.id, sessionObj)
+            return `session_id=${sessionObj.session_id}; SameSite=Lax; HttpOnly; Domain=localhost; Secure; Path=/api; Max-Age=${SESSION_DURATION / 1000};`
          } catch (/** @type {any} */ e) {
             console.error('SESSION WAS NOT SAVED', e)
          }

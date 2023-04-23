@@ -1,4 +1,5 @@
 import { ISecretSession } from "domain/Secret";
+import { IQbuilder } from "sp-core/types";
 
 export interface ISessionStore {
    loadSession(session_id: string | undefined, ip: string): Promise<ISecretSession>
@@ -13,5 +14,6 @@ export interface ISessionHandlers {
 }
 
 export function createSessionStoreInRAM(SESSION_DURATION: number) : ISessionStore
+export function createDbSessionStore(sessionQBuilder: IQbuilder, SESSION_DURATION: number) : ISessionStore
 export function startSession(session_id: string | undefined, ip: string, sessionStore: ISessionStore) : Promise<ISessionHandlers>
 

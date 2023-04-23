@@ -1,8 +1,6 @@
 'use strict'
 
 const http = require('node:http')
-// const fs = require('node:fs')
-// const nodeUrl = require('node:url')
 const assert = require('node:assert')
 const { Pool } = require('pg')
 const { createStaticServer } = require('./framework/server/static-files-handler')
@@ -13,7 +11,12 @@ const { createResponse } = require('./framework/server/response')
 const { parseCookies, receiveArgs } = require('./framework/server/request')
 const { createSpModel } = require('./sp-core/sp-model')
 const { kebabToCamelCase } = require('./framework')
-const { createSessionStoreInRAM, startSession } = require('./framework/server/session')
+const {
+   // createSessionStoreInRAM,
+   startSession,
+   createDbSessionStore
+} = require('./framework/server/session')
+const { createQBuilder } = require('./sp-core/sp-query-builder')
 
 const PG_DATABASE = config.DB_SETTINGS.database
 const staticServer = createStaticServer([__dirname + '/public']);
@@ -25,7 +28,8 @@ pgPool.query('SELECT 1+1').then(async () => {
    const dbTables = await findDbTables(config.DB_SCHEMAS, poolQuery)
    await saveAllColumnsToFiles(dbTables, __dirname + '/domain', __dirname + '/models', PG_DATABASE, poolQuery)
    await createInterfaces(config.DB_SCHEMAS, PG_DATABASE, poolQuery, __dirname + '/domain')
-   const sessionStore = createSessionStoreInRAM(config.SESSION_DURATION)
+   const sessionStore = createDbSessionStore(createQBuilder(poolQuery, config.SESSION_TABLE), config.SESSION_DURATION)
+   // createSessionStoreInRAM(config.SESSION_DURATION)
 
    const server = http.createServer(async (req, res) => {
       const isResJson = !!req.headers['accept']?.includes('application/json')
@@ -40,6 +44,7 @@ pgPool.query('SELECT 1+1').then(async () => {
          }
 
          const cookie = parseCookies(req)
+         console.log({ cookie });
          const ip = req.socket.remoteAddress || ''
          const sessionObj = await startSession(cookie.session_id, ip, sessionStore)
          if (req.url.startsWith(config.API_PREFIX)) {
@@ -52,7 +57,7 @@ pgPool.query('SELECT 1+1').then(async () => {
                const schema = urlArr[0]
                const table = urlArr[1]
                const action = kebabToCamelCase(urlArr[2])
-               console.log({ schema, table, action });
+               // console.log({ schema, table, action });
                const pgClient = await pgPool.connect()
                await pgClient.query('BEGIN')
                try {
@@ -86,7 +91,9 @@ pgPool.query('SELECT 1+1').then(async () => {
 
          assert(resData, `Route for url="${req.url}" not found`)
          const cookieHeader = await sessionObj.SaveSession()
-         res.writeHead(resData.statusCode, { ...resData.headers, 'Set-Cookie': cookieHeader })
+         console.log({ cookieHeader });
+         if (cookieHeader) resData.headers['Set-Cookie'] = cookieHeader
+         res.writeHead(resData.statusCode, resData.headers)
          // console.log({ headers: resData.headers });
          res.end(isResJson ? JSON.stringify(resData.data) : resData.data)
       } catch (/** @type {any} */ e) {
