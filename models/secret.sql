@@ -47,7 +47,7 @@ CREATE TABLE secret.session(
    session_id VARCHAR(100) UNIQUE NOT NULL,
    ip_address VARCHAR(20),
    data JSON,
-   expires TIMESTAMPTZ NOT NULL,
+   expires BIGINT,
    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
